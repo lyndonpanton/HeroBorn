@@ -13,6 +13,7 @@ public class LearningCurve : MonoBehaviour
 
     public bool hasDungeonKey = true;
     public int CurrentGold = 48;
+    public string weaponType = "Arcane Staff";
 
     // Start is called before the first frame update
     void Start()
@@ -21,9 +22,10 @@ public class LearningCurve : MonoBehaviour
         {
             Debug.Log("You possess the sacred key - enter");
         }
-        else
+
+        if (weaponType != "Longsword")
         {
-            Debug.Log("You have not proved yourself yet.");
+            Debug.Log("You don\'t appear to have the right type of weapon...");
         }
     }
 
