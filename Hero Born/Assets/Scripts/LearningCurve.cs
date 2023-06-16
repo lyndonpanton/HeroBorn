@@ -36,41 +36,21 @@ public class LearningCurve : MonoBehaviour
     };
 
 
-    //Dictionary<string, int> ItemInventory = new Dictionary<string, int>()
-    //{
-    //        { "Potion", 5 },
-    //        { "Antidote", 7 },
-    //        { "Aspirin", 1 }
-    //};
+    Dictionary<string, int> ItemInventory = new Dictionary<string, int>()
+    {
+            { "Potion", 5 },
+            { "Antidote", 7 },
+            { "Aspirin", 1 }
+    };
 
 
     // Start is called before the first frame update
     void Start()
     {
-        Dictionary<string, int> ItemInventory = new Dictionary<string, int>()
-        {
-            { "Potion", 5 },
-            { "Antidote", 7 },
-            { "Aspirin", 1 }
-        };
+        Debug.Log($"Party Members: {QuestPartyMembers.Count}");
 
-        Debug.Log($"Items: {ItemInventory.Count}");
-
-        int numberOfPotions = ItemInventory["Potion"];
-        ItemInventory["Potion"] = 10;
-
-        ItemInventory.Add("Throwing Knife", 3);
-        // Non-existent key is automatically added to the dictionary
-        ItemInventory["Bandage"] = 5;
-
-        if (ItemInventory.ContainsKey("Aspirin"))
-        {
-            ItemInventory["Aspirin"] = 3;
-        }
-
-        ItemInventory.Remove("Antidote");
-
-        Debug.Log(ItemInventory.Count);
+        //FindPartyMember();
+        FindPartyMember("Merlin the Wise");
     }
 
     // Update is called once per frame
@@ -82,6 +62,21 @@ public class LearningCurve : MonoBehaviour
     public void ComputeAge()
     {
         Debug.Log(CurrentAge + AddedAge);
+    }
+
+    //public void FindPartyMember()
+    public void FindPartyMember(string partyMember)
+    {
+        for (int i = 0; i < QuestPartyMembers.Count; i++)
+        {
+            Debug.Log($"Index: {i} - {QuestPartyMembers[i]}");
+
+            //if (QuestPartyMembers[i] == "Merlin the Wise")
+            if (QuestPartyMembers[i] == partyMember)
+            {
+                Debug.Log("Glad you're here Merlin!");
+            }
+        }
     }
 
     public int GenerateCharacter(string name, int level)
