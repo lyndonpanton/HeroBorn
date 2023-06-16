@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class LearningCurve : MonoBehaviour
@@ -16,20 +17,14 @@ public class LearningCurve : MonoBehaviour
     public string weaponType = "Arcane Staff";
     public bool weaponEquipped = true;
 
+    public bool PureOfHeart = true;
+    public bool HasSecretIncantation = false;
+    public string RareItem = "Relic Stone";
+
     // Start is called before the first frame update
     void Start()
-    {
-        if (weaponEquipped)
-        {
-            if (weaponType == "Longsword")
-            {
-                Debug.Log("For the Queen!");
-            }
-        }
-        else
-        {
-            Debug.Log("Fists aren\'t going to work against armour");
-        }    
+    {  
+        OpenTreasureChamber();
     }
 
     // Update is called once per frame
@@ -46,6 +41,25 @@ public class LearningCurve : MonoBehaviour
     public int GenerateCharacter(string name, int level)
     {
         return level += 5;
+    }
+
+    public void OpenTreasureChamber()
+    {
+        if (PureOfHeart && RareItem == "Relic Stone")
+        {
+            if (!HasSecretIncantation)
+            {
+                Debug.Log("You have the spirit, but not the knowledge.");
+            }
+            else
+            {
+                Debug.Log("The treasure is yours, worthy hero!");
+            }
+        }
+        else
+        {
+            Debug.Log("Come back when you have what it takes.");
+        }
     }
 
     public void Thievery()
