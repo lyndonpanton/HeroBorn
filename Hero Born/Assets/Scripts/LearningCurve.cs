@@ -28,35 +28,49 @@ public class LearningCurve : MonoBehaviour
     //int[] topPlayerScores = new int[] { 713, 549, 984 };
     int[] topPlayerScores = { 713, 549, 984 };
 
-    //List<string> QuestPartyMembers = new List<string>()
-    //    {
-    //        "Grim the Barbarian",
-    //        "Merlin the Wise",
-    //        "Sterling the Knight"
+    List<string> QuestPartyMembers = new List<string>()
+        {
+            "Grim the Barbarian",
+            "Merlin the Wise",
+            "Sterling the Knight"
+    };
+
+
+    //Dictionary<string, int> ItemInventory = new Dictionary<string, int>()
+    //{
+    //        { "Potion", 5 },
+    //        { "Antidote", 7 },
+    //        { "Aspirin", 1 }
     //};
 
 
     // Start is called before the first frame update
     void Start()
     {
-        List<string> QuestPartyMembers = new List<string>()
+        Dictionary<string, int> ItemInventory = new Dictionary<string, int>()
         {
-            "Grim the Barbarian",
-            "Merlin the Wise",
-            "Sterling the Knight"
+            { "Potion", 5 },
+            { "Antidote", 7 },
+            { "Aspirin", 1 }
         };
 
-        QuestPartyMembers.Add("Craven the Necromancer");
-        QuestPartyMembers.Insert(1, "Tanis the Thief");
+        Debug.Log($"Items: {ItemInventory.Count}");
 
-        // Remove by index
-        //QuestPartyMembers.RemoveAt(0);
-        // Remove by value
-        QuestPartyMembers.Remove("Grim the Barbarian");
+        int numberOfPotions = ItemInventory["Potion"];
+        ItemInventory["Potion"] = 10;
 
-        Debug.Log($"Party Members: {QuestPartyMembers.Count}");
+        ItemInventory.Add("Throwing Knife", 3);
+        // Non-existent key is automatically added to the dictionary
+        ItemInventory["Bandage"] = 5;
 
+        if (ItemInventory.ContainsKey("Aspirin"))
+        {
+            ItemInventory["Aspirin"] = 3;
+        }
 
+        ItemInventory.Remove("Antidote");
+
+        Debug.Log(ItemInventory.Count);
     }
 
     // Update is called once per frame
