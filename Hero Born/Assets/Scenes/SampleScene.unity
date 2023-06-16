@@ -314,4 +314,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d35373684d98b64e8bdfd86d219d994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentAge: 30
+  CurrentAge: 18
+  AddedAge: 1
+  FirstName: Harrison
+  isAuthor: 1
+  hasDungeonKey: 1
+  CurrentGold: 48
+  weaponType: Arcane Staff
+  weaponEquipped: 1
+  PureOfHeart: 1
+  HasSecretIncantation: 0
+  RareItem: Relic Stone
