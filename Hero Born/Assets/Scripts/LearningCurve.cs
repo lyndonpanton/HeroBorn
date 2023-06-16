@@ -22,11 +22,13 @@ public class LearningCurve : MonoBehaviour
     public string RareItem = "Relic Stone";
 
     public string CharacterAction = "Attack";
+    int DiceRoll = 7;
+
 
     // Start is called before the first frame update
     void Start()
-    {  
-        PrintCharacterAction();
+    {
+        RollDice();
     }
 
     // Update is called once per frame
@@ -76,6 +78,23 @@ public class LearningCurve : MonoBehaviour
                 break;
             default:
                 Debug.Log("Shields up.");
+                break;
+        }
+    }
+
+    public void RollDice()
+    {
+        switch(DiceRoll)
+        {
+            case 7:
+            case 15:
+                Debug.Log("Mediorce damage, not bad.");
+                break;
+            case 20:
+                Debug.Log("Critical hit, the creature goes down!");
+                break;
+            default:
+                Debug.Log("You completely missed and fell on your face.");
                 break;
         }
     }
