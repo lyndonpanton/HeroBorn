@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Character
@@ -20,5 +21,11 @@ public class Character
     public void PrintStatsInfo()
     {
         Debug.Log($"Hero: {this.name} ({this.exp}xp)");
+    }
+
+    private void Reset()
+    {
+        this.name = "n/a";
+        this.exp = 0;
     }
 }
