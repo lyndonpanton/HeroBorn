@@ -21,10 +21,12 @@ public class LearningCurve : MonoBehaviour
     public bool HasSecretIncantation = false;
     public string RareItem = "Relic Stone";
 
+    public string CharacterAction = "Attack";
+
     // Start is called before the first frame update
     void Start()
     {  
-        OpenTreasureChamber();
+        PrintCharacterAction();
     }
 
     // Update is called once per frame
@@ -59,6 +61,22 @@ public class LearningCurve : MonoBehaviour
         else
         {
             Debug.Log("Come back when you have what it takes.");
+        }
+    }
+
+    public void PrintCharacterAction()
+    {
+        switch(CharacterAction)
+        {
+            case "Heal":
+                Debug.Log("Potion sent.");
+                break;
+            case "Attack":
+                Debug.Log("To arms!");
+                break;
+            default:
+                Debug.Log("Shields up.");
+                break;
         }
     }
 
