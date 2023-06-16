@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Paladin : Character
 {
+    public Weapon weapon;
+
     public Paladin() : base()
     {
 
@@ -12,5 +14,10 @@ public class Paladin : Character
     public Paladin(string name) : base(name)
     {
 
+    }
+
+    public Paladin(string name, Weapon weapon) : base(name)
+    {
+        this.weapon = weapon;
     }
 }

@@ -58,7 +58,7 @@ public class LearningCurve : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Paladin knight = new Paladin("Sir Arthur");
+        Paladin knight = new Paladin("Sir Arthur", huntingBow);
         knight.PrintStatsInfo();
     }
 
