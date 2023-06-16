@@ -12,6 +12,7 @@ public class LearningCurve : MonoBehaviour
     public bool isAuthor = true;
 
     public bool hasDungeonKey = true;
+    public int CurrentGold = 48;
 
     // Start is called before the first frame update
     void Start()
@@ -32,13 +33,29 @@ public class LearningCurve : MonoBehaviour
         
     }
 
-    void ComputeAge()
+    public void ComputeAge()
     {
         Debug.Log(CurrentAge + AddedAge);
     }
 
-    int GenerateCharacter(string name, int level)
+    public int GenerateCharacter(string name, int level)
     {
         return level += 5;
+    }
+
+    public void Thievery()
+    {
+        if (CurrentGold > 50)
+        {
+            Debug.Log("You\'re rolling in it!");
+        }
+        else if (CurrentGold < 15)
+        {
+            Debug.Log("Not much there to steal...");
+        }
+        else
+        {
+            Debug.Log("Looks like your purse is in the sweet spot.");
+        }
     }
 }
