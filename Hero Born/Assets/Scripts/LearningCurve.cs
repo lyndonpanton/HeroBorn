@@ -11,14 +11,19 @@ public class LearningCurve : MonoBehaviour
     public string FirstName = "Harrison";
     public bool isAuthor = true;
 
+    public bool hasDungeonKey = true;
+
     // Start is called before the first frame update
     void Start()
     {
-        int CharacterLevel = 32;
-        int NextSkillLevel = GenerateCharacter("Spike", CharacterLevel);
-
-        Debug.Log(NextSkillLevel);
-        Debug.Log(GenerateCharacter("Faye", CharacterLevel));
+        if (hasDungeonKey)
+        {
+            Debug.Log("You possess the sacred key - enter");
+        }
+        else
+        {
+            Debug.Log("You have not proved yourself yet.");
+        }
     }
 
     // Update is called once per frame
@@ -34,8 +39,6 @@ public class LearningCurve : MonoBehaviour
 
     int GenerateCharacter(string name, int level)
     {
-        //Debug.Log($"Character: {name} (lv. {level})");
-
         return level += 5;
     }
 }
