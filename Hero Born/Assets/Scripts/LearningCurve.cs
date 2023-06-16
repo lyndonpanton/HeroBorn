@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LearningCurve : MonoBehaviour
 {
-    public int CurrentAge = 30;
+    public int CurrentAge = 18;
 
     // Start is called before the first frame update
     void Start()
