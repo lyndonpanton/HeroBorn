@@ -29,39 +29,33 @@ public class LearningCurve : MonoBehaviour
     int[] topPlayerScores = { 713, 549, 984 };
 
     List<string> QuestPartyMembers = new List<string>()
-        {
-            "Grim the Barbarian",
-            "Merlin the Wise",
-            "Sterling the Knight"
+    {
+        "Grim the Barbarian",
+        "Merlin the Wise",
+        "Sterling the Knight"
     };
 
 
     Dictionary<string, int> ItemInventory = new Dictionary<string, int>()
     {
-            { "Potion", 5 },
-            { "Antidote", 7 },
-            { "Aspirin", 1 }
+        { "Potion", 5 },
+        { "Antidote", 7 },
+        { "Aspirin", 1 }
     };
+
+    public int PlayerLives = 3;
+
+
 
 
     // Start is called before the first frame update
     void Start()
     {
-        foreach(string partyMember in QuestPartyMembers)
-        {
-            Debug.Log($"{partyMember} - Here!");
-        }
+        Character hero = new Character();
+        Character heroine = new Character("Agatha");
 
-        foreach(KeyValuePair<string, int> item in ItemInventory)
-        {
-            Debug.Log($"Item: {item.Key} ({item.Value}G)");
-
-            if (CurrentGold >= item.Value)
-            {
-                Debug.Log($"You can afford a {item.Key}"
-                    + $" (with {CurrentGold - item.Value}G change)");
-            }
-        }
+        hero.PrintStatsInfo();
+        heroine.PrintStatsInfo();
     }
 
     // Update is called once per frame
@@ -93,6 +87,17 @@ public class LearningCurve : MonoBehaviour
     public int GenerateCharacter(string name, int level)
     {
         return level += 5;
+    }
+
+    public void HealthStatus()
+    {
+        while (PlayerLives > 0)
+        {
+            Debug.Log("Still alive!");
+            PlayerLives--;
+        }
+
+        Debug.Log("Player KO\'d");
     }
 
     public void OpenTreasureChamber()
