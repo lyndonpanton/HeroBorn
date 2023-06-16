@@ -24,11 +24,20 @@ public class LearningCurve : MonoBehaviour
     public string CharacterAction = "Attack";
     int DiceRoll = 7;
 
+    //int[] topPlayerScores = new int[3];
+    //int[] topPlayerScores = new int[] { 713, 549, 984 };
+    int[] topPlayerScores = { 713, 549, 984 };
+
 
     // Start is called before the first frame update
     void Start()
     {
-        RollDice();
+        Debug.Log(topPlayerScores.Length);
+        int score = topPlayerScores[1];
+        Debug.Log(score);
+        topPlayerScores[1] = 1001;
+        Debug.Log(score);
+        Debug.Log(topPlayerScores[1]);
     }
 
     // Update is called once per frame
