@@ -20,4 +20,9 @@ public class Paladin : Character
     {
         this.weapon = weapon;
     }
+
+    public override void PrintStatsInfo()
+    {
+        Debug.Log($"Hail {name}! Take up your {weapon.name}.");
+    }
 }

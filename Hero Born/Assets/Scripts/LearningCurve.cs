@@ -51,15 +51,15 @@ public class LearningCurve : MonoBehaviour
     // Struct instances are value types
     Weapon huntingBow = new Weapon("Hunting Bow", 105);
     Weapon warBow = new Weapon("War Bow", 155);
+    //Paladin knight = new Paladin("Sir Arthur", huntingBow);
 
-
-
+    public Transform cameraTransform;
 
     // Start is called before the first frame update
     void Start()
     {
-        Paladin knight = new Paladin("Sir Arthur", huntingBow);
-        knight.PrintStatsInfo();
+        cameraTransform = this.GetComponent<Transform>();
+        Debug.Log(cameraTransform.localPosition);
     }
 
     // Update is called once per frame

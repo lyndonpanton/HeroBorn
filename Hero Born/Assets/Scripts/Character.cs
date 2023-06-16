@@ -18,7 +18,7 @@ public class Character
         this.name = name;
     }
 
-    public void PrintStatsInfo()
+    public virtual void PrintStatsInfo()
     {
         Debug.Log($"Hero: {this.name} ({this.exp}xp)");
     }
