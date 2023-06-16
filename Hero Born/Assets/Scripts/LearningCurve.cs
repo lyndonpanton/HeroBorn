@@ -28,16 +28,35 @@ public class LearningCurve : MonoBehaviour
     //int[] topPlayerScores = new int[] { 713, 549, 984 };
     int[] topPlayerScores = { 713, 549, 984 };
 
+    //List<string> QuestPartyMembers = new List<string>()
+    //    {
+    //        "Grim the Barbarian",
+    //        "Merlin the Wise",
+    //        "Sterling the Knight"
+    //};
+
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(topPlayerScores.Length);
-        int score = topPlayerScores[1];
-        Debug.Log(score);
-        topPlayerScores[1] = 1001;
-        Debug.Log(score);
-        Debug.Log(topPlayerScores[1]);
+        List<string> QuestPartyMembers = new List<string>()
+        {
+            "Grim the Barbarian",
+            "Merlin the Wise",
+            "Sterling the Knight"
+        };
+
+        QuestPartyMembers.Add("Craven the Necromancer");
+        QuestPartyMembers.Insert(1, "Tanis the Thief");
+
+        // Remove by index
+        //QuestPartyMembers.RemoveAt(0);
+        // Remove by value
+        QuestPartyMembers.Remove("Grim the Barbarian");
+
+        Debug.Log($"Party Members: {QuestPartyMembers.Count}");
+
+
     }
 
     // Update is called once per frame
