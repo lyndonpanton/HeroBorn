@@ -47,10 +47,21 @@ public class LearningCurve : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log($"Party Members: {QuestPartyMembers.Count}");
+        foreach(string partyMember in QuestPartyMembers)
+        {
+            Debug.Log($"{partyMember} - Here!");
+        }
 
-        //FindPartyMember();
-        FindPartyMember("Merlin the Wise");
+        foreach(KeyValuePair<string, int> item in ItemInventory)
+        {
+            Debug.Log($"Item: {item.Key} ({item.Value}G)");
+
+            if (CurrentGold >= item.Value)
+            {
+                Debug.Log($"You can afford a {item.Key}"
+                    + $" (with {CurrentGold - item.Value}G change)");
+            }
+        }
     }
 
     // Update is called once per frame
