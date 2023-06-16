@@ -53,13 +53,21 @@ public class LearningCurve : MonoBehaviour
     Weapon warBow = new Weapon("War Bow", 155);
     //Paladin knight = new Paladin("Sir Arthur", huntingBow);
 
-    public Transform cameraTransform;
+    public Transform CameraTransform;
+
+    public GameObject DirectionalLight;
+    public Transform DirectionLightTransform;
 
     // Start is called before the first frame update
     void Start()
     {
-        cameraTransform = this.GetComponent<Transform>();
-        Debug.Log(cameraTransform.localPosition);
+        CameraTransform = this.GetComponent<Transform>();
+        Debug.Log(CameraTransform.localPosition);
+
+        DirectionalLight = GameObject.Find("Directional Light");
+        DirectionLightTransform = DirectionalLight.GetComponent<Transform>();
+
+        Debug.Log(DirectionLightTransform.localPosition);
     }
 
     // Update is called once per frame
