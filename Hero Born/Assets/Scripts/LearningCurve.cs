@@ -45,34 +45,21 @@ public class LearningCurve : MonoBehaviour
 
     public int PlayerLives = 3;
 
+    // Class instances (objects) are reference types
+    Character hero = new Character();
+    Character heroine = new Character("Agatha");
+    // Struct instances are value types
+    Weapon huntingBow = new Weapon("Hunting Bow", 105);
+    Weapon warBow = new Weapon("War Bow", 155);
+
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        // Class instances (objects) are reference types
-        Character hero = new Character();
-        Character hero2 = hero;
-
-        hero2.name = "Sir Kane the Brave";
-
-        hero.PrintStatsInfo();
-        hero2.PrintStatsInfo();
-        //Character heroine = new Character("Agatha");
-
-        //hero.PrintStatsInfo();
-        //heroine.PrintStatsInfo();
-
-        // Struct instances are value types
-        Weapon huntingBow = new Weapon("Hunting Bow", 105);
-        Weapon warBow = huntingBow;
-
-        warBow.name = "War Bow";
-        warBow.damage = 155;
-
-        huntingBow.PrintWeaponStats();
-        warBow.PrintWeaponStats();
+        Paladin knight = new Paladin("Sir Arthur");
+        knight.PrintStatsInfo();
     }
 
     // Update is called once per frame
