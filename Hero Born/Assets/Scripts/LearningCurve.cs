@@ -56,7 +56,7 @@ public class LearningCurve : MonoBehaviour
     public Transform CameraTransform;
 
     public GameObject DirectionalLight;
-    public Transform DirectionLightTransform;
+    public Transform DirectionalLightTransform;
 
     // Start is called before the first frame update
     void Start()
@@ -64,10 +64,13 @@ public class LearningCurve : MonoBehaviour
         CameraTransform = this.GetComponent<Transform>();
         Debug.Log(CameraTransform.localPosition);
 
-        DirectionalLight = GameObject.Find("Directional Light");
-        DirectionLightTransform = DirectionalLight.GetComponent<Transform>();
+        //DirectionalLight = GameObject.Find("Directional Light");
+        DirectionalLightTransform = DirectionalLight.GetComponent<Transform>();
 
-        Debug.Log(DirectionLightTransform.localPosition);
+        //DirectionalLightTransform = GameObject.Find("Directional Light")
+        //    .GetComponent<Transform>();
+
+        Debug.Log(DirectionalLightTransform.localPosition);
     }
 
     // Update is called once per frame
