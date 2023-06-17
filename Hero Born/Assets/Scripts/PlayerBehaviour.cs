@@ -13,6 +13,12 @@ public class PlayerBehaviour : MonoBehaviour
 
     private Rigidbody _rb;
 
+    public float JumpVelocity = 5f;
+    private bool _isJumping;
+    public float DistanceToGround = 0.1f;
+    public LayerMask GroundLayer;
+    private CapsuleCollider _capsuleCollider;
+
     void Start()
     {
         if (GetComponent<Rigidbody>() != null)
@@ -23,11 +29,15 @@ public class PlayerBehaviour : MonoBehaviour
             this.AddComponent<Rigidbody>();
             _rb = GetComponent<Rigidbody>();
         }
+
+        _capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        _isJumping |= Input.GetKeyDown(KeyCode.Space);
+
         _horizontalInput = Input.GetAxis("Horizontal") * RotateSpeed;
         _verticalInput = Input.GetAxis("Vertical") * MoveSpeed;
 
@@ -42,6 +52,18 @@ public class PlayerBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (IsGrounded() && _isJumping)
+        {
+            _rb.AddForce(
+                Vector3.up * JumpVelocity,
+                ForceMode.Impulse
+            );
+        }
+
+        // stop allowing jumps after a jump is peformed
+        _isJumping = false;
+
+
         Vector3 rotation = Vector3.up * _horizontalInput;
 
         Quaternion angleRotation = Quaternion.Euler(
@@ -59,4 +81,25 @@ public class PlayerBehaviour : MonoBehaviour
             _rb.rotation * angleRotation
         );
     }
+
+    private bool IsGrounded()
+    {
+        Vector3 capsuleBottom = new Vector3(
+            _capsuleCollider.bounds.center.x,
+            _capsuleCollider.bounds.min.y,
+            _capsuleCollider.bounds.center.z
+        );
+
+        bool grounded = Physics.CheckCapsule(
+            _capsuleCollider.bounds.center,
+            capsuleBottom,
+            DistanceToGround,
+            GroundLayer,
+            QueryTriggerInteraction.Ignore
+        );
+
+        return grounded;
+    }
 }
+
+
