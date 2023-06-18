@@ -19,6 +19,10 @@ public class PlayerBehaviour : MonoBehaviour
     public LayerMask GroundLayer;
     private CapsuleCollider _capsuleCollider;
 
+    public GameObject Bullet;
+    public float BulletSpeed = 100f;
+    private bool _isShooting;
+
     void Start()
     {
         if (GetComponent<Rigidbody>() != null)
@@ -37,6 +41,7 @@ public class PlayerBehaviour : MonoBehaviour
     void Update()
     {
         _isJumping |= Input.GetKeyDown(KeyCode.Space);
+        _isShooting |= Input.GetMouseButtonDown(0);
 
         _horizontalInput = Input.GetAxis("Horizontal") * RotateSpeed;
         _verticalInput = Input.GetAxis("Vertical") * MoveSpeed;
@@ -63,6 +68,20 @@ public class PlayerBehaviour : MonoBehaviour
         // stop allowing jumps after a jump is peformed
         _isJumping = false;
 
+        if (_isShooting)
+        {
+            GameObject newBullet = Instantiate(
+                Bullet,
+                this.transform.position + new Vector3(1, 0, 0),
+                this.transform.rotation
+            );
+
+            Rigidbody bulletRB = newBullet.GetComponent<Rigidbody>();
+            bulletRB.velocity = this.transform.forward * BulletSpeed;
+        }
+
+        // stop allowing shots after a shot is performed
+        _isShooting = false;
 
         Vector3 rotation = Vector3.up * _horizontalInput;
 
