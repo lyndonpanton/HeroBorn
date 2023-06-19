@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameBehaviour : MonoBehaviour
 {
@@ -42,6 +42,8 @@ public class GameBehaviour : MonoBehaviour
 
                 WinButton.gameObject.transform.parent
                     .gameObject.SetActive(true);
+
+                Time.timeScale = 0f;
             }
             else
             {
@@ -64,5 +66,12 @@ public class GameBehaviour : MonoBehaviour
             HealthText.text = "Player Health: " + HP;
             Debug.Log($"Lives: {_playerHP}");
         }
+    }
+
+    public void RestartScene()
+    {
+        SceneManager.LoadScene("SampleScene");
+
+        Time.timeScale = 1;
     }
 }
