@@ -13,6 +13,8 @@ public class EnemyBehaviour : MonoBehaviour
     // UnityEngine.AI gives access to Unity's Navigation classes
     private NavMeshAgent _agent;
 
+    public Transform Player;
+
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -20,6 +22,8 @@ public class EnemyBehaviour : MonoBehaviour
         InitialisePatrolRoute();
 
         MoveToNextPatrolLocation();
+
+        Player = GameObject.Find("Player").transform;
     }
 
     void Update()
@@ -52,6 +56,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (other.name == "Player")
         {
+            _agent.destination = Player.position;
             Debug.Log("Player detected - Attack!");
         }
     }
