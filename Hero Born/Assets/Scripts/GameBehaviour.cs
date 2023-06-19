@@ -39,12 +39,11 @@ public class GameBehaviour : MonoBehaviour
 
             if (_itemsCollected >= MaxItems)
             {
-                ProgressText.text = "You've found all the items!";
-
                 WinButton.gameObject.transform.parent
                     .gameObject.SetActive(true);
 
-                Time.timeScale = 0f;
+                UpdateScene(ProgressText.text = "You've found all the items!");
+                
             }
             else
             {
@@ -69,10 +68,10 @@ public class GameBehaviour : MonoBehaviour
 
             if (_playerHP <= 0)
             {
-                ProgressText.text = "You want another life with that?";
                 LoseButton.gameObject.transform.parent
                     .gameObject.SetActive(true);
-                Time.timeScale = 0;
+
+                UpdateScene("You want another life with that?");
             }
             else
             {
@@ -86,5 +85,11 @@ public class GameBehaviour : MonoBehaviour
         SceneManager.LoadScene("SampleScene");
 
         Time.timeScale = 1;
+    }
+
+    public void UpdateScene(string updatedText)
+    {
+        ProgressText.text = updatedText;
+        Time.timeScale = 0;
     }
 }
