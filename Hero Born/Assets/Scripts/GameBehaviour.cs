@@ -9,11 +9,13 @@ public class GameBehaviour : MonoBehaviour
     private int _itemsCollected = 0;
     private int _playerHP = 10;
 
-    public int MaxItems = 4;
+    public int MaxItems = 1;
 
     public TextMeshProUGUI HealthText;
     public TextMeshProUGUI ItemText;
     public TextMeshProUGUI ProgressText;
+
+    public TextMeshProUGUI WinButton;
 
     void Start()
     {
@@ -37,6 +39,9 @@ public class GameBehaviour : MonoBehaviour
             if (_itemsCollected >= MaxItems)
             {
                 ProgressText.text = "You've found all the items!";
+
+                WinButton.gameObject.transform.parent
+                    .gameObject.SetActive(true);
             }
             else
             {
