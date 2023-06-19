@@ -82,9 +82,7 @@ public class GameBehaviour : MonoBehaviour
 
     public void RestartScene()
     {
-        SceneManager.LoadScene("SampleScene");
-
-        Time.timeScale = 1;
+        Utilities.RestartLevel();
     }
 
     public void UpdateScene(string updatedText)
