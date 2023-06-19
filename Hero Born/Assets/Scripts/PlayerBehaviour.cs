@@ -23,6 +23,8 @@ public class PlayerBehaviour : MonoBehaviour
     public float BulletSpeed = 100f;
     private bool _isShooting;
 
+    private GameBehaviour _gameManager;
+
     void Start()
     {
         if (GetComponent<Rigidbody>() != null)
@@ -35,6 +37,9 @@ public class PlayerBehaviour : MonoBehaviour
         }
 
         _capsuleCollider = GetComponent<CapsuleCollider>();
+
+        _gameManager = GameObject.Find("Game_Manager")
+            .GetComponent<GameBehaviour>();
     }
 
     // Update is called once per frame
@@ -99,6 +104,14 @@ public class PlayerBehaviour : MonoBehaviour
         _rb.MoveRotation(
             _rb.rotation * angleRotation
         );
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "Enemy")
+        {
+            _gameManager.HP -= 1;
+        }
     }
 
     private bool IsGrounded()
