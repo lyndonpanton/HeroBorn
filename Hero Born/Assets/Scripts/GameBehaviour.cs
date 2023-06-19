@@ -16,6 +16,7 @@ public class GameBehaviour : MonoBehaviour
     public TextMeshProUGUI ProgressText;
 
     public TextMeshProUGUI WinButton;
+    public TextMeshProUGUI LoseButton;
 
     void Start()
     {
@@ -65,6 +66,18 @@ public class GameBehaviour : MonoBehaviour
 
             HealthText.text = "Player Health: " + HP;
             Debug.Log($"Lives: {_playerHP}");
+
+            if (_playerHP <= 0)
+            {
+                ProgressText.text = "You want another life with that?";
+                LoseButton.gameObject.transform.parent
+                    .gameObject.SetActive(true);
+                Time.timeScale = 0;
+            }
+            else
+            {
+                ProgressText.text = "Ouch... that's gotta hurt";
+            }
         }
     }
 
