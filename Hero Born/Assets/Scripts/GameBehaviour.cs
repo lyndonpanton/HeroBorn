@@ -82,8 +82,8 @@ public class GameBehaviour : MonoBehaviour
 
     public void RestartScene()
     {
-        Utilities.RestartLevel();
-        //Utilities.RestartLevel(0);
+        //Utilities.RestartLevel();
+        Utilities.RestartLevel(0);
     }
 
     public void UpdateScene(string updatedText)

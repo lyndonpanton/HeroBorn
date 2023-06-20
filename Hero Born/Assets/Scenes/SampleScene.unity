@@ -1445,7 +1445,7 @@ MonoBehaviour:
   ItemText: {fileID: 1710689273}
   ProgressText: {fileID: 867620497}
   WinButton: {fileID: 1105597301}
-  LoseButton: {fileID: 0}
+  LoseButton: {fileID: 1423965202}
 --- !u!1 &1105597299
 GameObject:
   m_ObjectHideFlags: 0
