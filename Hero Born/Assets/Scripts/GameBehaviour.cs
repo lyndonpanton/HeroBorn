@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using CustomExtensions;
 
 public class GameBehaviour : MonoBehaviour, IManager
 {
@@ -44,7 +45,12 @@ public class GameBehaviour : MonoBehaviour, IManager
         ItemText.text += _itemsCollected;
         HealthText.text += _playerHP;
 
-        _state = "Game Manager Initialized...";
+        _state = "Game Manager initialized...";
+
+        // _state is a string and extending the string class is relevant
+        // to it
+        _state.FancyDebug();
+
         Debug.Log(_state);
     }
 
