@@ -19,6 +19,8 @@ public class GameBehaviour : MonoBehaviour, IManager
     public TextMeshProUGUI WinButton;
     public TextMeshProUGUI LoseButton;
 
+    public Stack<string> LootStack = new Stack<string>();
+
     private string _state;
 
     public string State
@@ -52,6 +54,12 @@ public class GameBehaviour : MonoBehaviour, IManager
         _state.FancyDebug();
 
         Debug.Log(_state);
+
+        LootStack.Push("Sword of Doom");
+        LootStack.Push("HP Boost");
+        LootStack.Push("Golden Key");
+        LootStack.Push("Pair of Winged Boots");
+        LootStack.Push("Mythril Bracer");
     }
 
     public int Items
@@ -108,6 +116,12 @@ public class GameBehaviour : MonoBehaviour, IManager
                 ProgressText.text = "Ouch... that's gotta hurt";
             }
         }
+    }
+
+    public void PrintLootReport()
+    {
+        Debug.Log($"There are {LootStack.Count} random loot items waiting"
+                    + $" for you.");
     }
 
     public void RestartScene()
