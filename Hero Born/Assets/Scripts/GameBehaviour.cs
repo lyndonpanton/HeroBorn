@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameBehaviour : MonoBehaviour
+public class GameBehaviour : MonoBehaviour, IManager
 {
     private int _itemsCollected = 0;
     private int _playerHP = 10;
@@ -18,10 +18,34 @@ public class GameBehaviour : MonoBehaviour
     public TextMeshProUGUI WinButton;
     public TextMeshProUGUI LoseButton;
 
+    private string _state;
+
+    public string State
+    {
+        get
+        {
+            return _state;
+        }
+
+        set
+        {
+            _state = value;
+        }
+    }
+
     void Start()
     {
+        Initialize();
+    }
+
+    public void Initialize()
+    {
+
         ItemText.text += _itemsCollected;
         HealthText.text += _playerHP;
+
+        _state = "Game Manager Initialized...";
+        Debug.Log(_state);
     }
 
     public int Items
