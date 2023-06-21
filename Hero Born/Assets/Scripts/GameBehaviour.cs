@@ -120,6 +120,13 @@ public class GameBehaviour : MonoBehaviour, IManager
 
     public void PrintLootReport()
     {
+        var currentItem = LootStack.Pop();
+
+        var nextItem = LootStack.Peek();
+
+        Debug.Log($"You retrieved and removed {currentItem}. You have a good"
+            + $" chance of finding {nextItem} next.");
+
         Debug.Log($"There are {LootStack.Count} random loot items waiting"
                     + $" for you.");
     }
