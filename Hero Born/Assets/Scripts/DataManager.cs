@@ -67,17 +67,31 @@ public class DataManager : MonoBehaviour, IManager
         Debug.Log("Data path directory deleted");
     }
 
+    public void DeleteFile(string filename)
+    {
+        if (!File.Exists(filename))
+        {
+            Debug.Log("File does not exist");
+            return;
+        }
+
+        File.Delete(filename);
+        Debug.Log("Persistent data file deleted");
+    }
+
     public void Initialize()
     {
         _state = "Data Manager initialised";
         //Debug.Log(_state);
 
         NewDirectory();
+        //DeleteDirectory();
         NewTextFile();
         UpdateTextFile();
         ReadFromFile(_textFile);
+        //DeleteFile(_textFile);
     }
-
+    
     public void NewDirectory()
     {
         if (!Directory.Exists(_dataPath))
