@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
-
 using System.IO;
-using UnityEngine.UIElements;
+using System;
+//using System;
 
 public class DataManager : MonoBehaviour, IManager
 {
     private string _dataPath;
+    private string _textFile;
+
     private string _state;
     public string State
     {
@@ -26,9 +28,10 @@ public class DataManager : MonoBehaviour, IManager
     void Awake()
     {
 
-        _dataPath = Application.persistentDataPath + "/Player_Data";
+        _dataPath = Path.Combine(Application.persistentDataPath, "Player_Data");
+        _textFile = Path.Combine(_dataPath, "Save_Data.txt");
 
-        //Debug.Log(_dataPath);
+        Debug.Log(_dataPath);
     }
 
     void Start()
@@ -70,7 +73,8 @@ public class DataManager : MonoBehaviour, IManager
         //Debug.Log(_state);
 
         NewDirectory();
-        //DeleteDirectory();
+        NewTextFile();
+        UpdateTextFile();
     }
 
     public void NewDirectory()
@@ -84,5 +88,34 @@ public class DataManager : MonoBehaviour, IManager
         }
 
         Debug.Log("Data Path directory already exists...");
+    }
+
+    public void NewTextFile()
+    {
+        if (!File.Exists(_textFile))
+        {
+            File.WriteAllText(_textFile, "<SAVE DATA>\n\n");
+            Debug.Log("Text file created");
+
+            return;
+        }
+
+        Debug.Log("Text file already exists");
+    }
+
+    public void UpdateTextFile()
+    {
+        if (!File.Exists( _textFile))
+        {
+            Debug.Log("File does not exist");
+            return;
+        }
+
+        File.AppendAllText(
+            _textFile,
+            $"Game started: {DateTime.Now}\n"
+        );
+
+        Debug.Log("File updated successfully");
     }
 }
