@@ -52,12 +52,25 @@ public class DataManager : MonoBehaviour, IManager
         Debug.Log($"Temporary Path: {Path.GetTempPath()}");
     }
 
+    public void DeleteDirectory()
+    {
+        if (!Directory.Exists(_dataPath))
+        {
+            Debug.Log("Directory does not exist");
+            return;
+        }
+
+        Directory.Delete(_dataPath, true);
+        Debug.Log("Data path directory deleted");
+    }
+
     public void Initialize()
     {
         _state = "Data Manager initialised";
         //Debug.Log(_state);
 
         NewDirectory();
+        //DeleteDirectory();
     }
 
     public void NewDirectory()
