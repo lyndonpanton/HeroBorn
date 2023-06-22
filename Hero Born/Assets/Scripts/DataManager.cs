@@ -75,6 +75,7 @@ public class DataManager : MonoBehaviour, IManager
         NewDirectory();
         NewTextFile();
         UpdateTextFile();
+        ReadFromFile(_textFile);
     }
 
     public void NewDirectory()
@@ -101,6 +102,17 @@ public class DataManager : MonoBehaviour, IManager
         }
 
         Debug.Log("Text file already exists");
+    }
+
+    public void ReadFromFile(string filename)
+    {
+        if (!File.Exists(filename))
+        {
+            Debug.Log("File does not exist");
+            return;
+        }
+
+        Debug.Log(File.ReadAllText(filename));
     }
 
     public void UpdateTextFile()
