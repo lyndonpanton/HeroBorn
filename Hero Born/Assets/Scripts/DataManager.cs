@@ -28,20 +28,12 @@ public class DataManager : MonoBehaviour, IManager
 
         _dataPath = Application.persistentDataPath + "/Player_Data";
 
-        Debug.Log(_dataPath);
+        //Debug.Log(_dataPath);
     }
 
     void Start()
     {
         Initialize();
-    }
-
-    public void Initialize()
-    {
-        _state = "Data Manager initialised";
-        Debug.Log(_state);
-
-        FilesystemInfo();
     }
 
     public void FilesystemInfo()
@@ -58,5 +50,26 @@ public class DataManager : MonoBehaviour, IManager
         // The temporary path which is the location of the Filesystem's
         // temporary folder
         Debug.Log($"Temporary Path: {Path.GetTempPath()}");
+    }
+
+    public void Initialize()
+    {
+        _state = "Data Manager initialised";
+        //Debug.Log(_state);
+
+        NewDirectory();
+    }
+
+    public void NewDirectory()
+    {
+        if (!Directory.Exists(_dataPath))
+        {
+            Directory.CreateDirectory(_dataPath);
+            Debug.Log("Data Path directory created");
+
+            return;
+        }
+
+        Debug.Log("Data Path directory already exists...");
     }
 }
