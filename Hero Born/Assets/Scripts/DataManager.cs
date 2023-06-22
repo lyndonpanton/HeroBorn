@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 
 public class DataManager : MonoBehaviour, IManager
 {
+    private string _dataPath;
     private string _state;
     public string State
     {
@@ -20,6 +21,14 @@ public class DataManager : MonoBehaviour, IManager
         {
             _state = value;
         }
+    }
+
+    void Awake()
+    {
+
+        _dataPath = Application.persistentDataPath + "/Player_Data";
+
+        Debug.Log(_dataPath);
     }
 
     void Start()
