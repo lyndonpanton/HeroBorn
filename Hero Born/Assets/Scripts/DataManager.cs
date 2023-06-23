@@ -4,14 +4,14 @@ using System.Xml.Serialization;
 using UnityEngine;
 using System.IO;
 using System;
-//using System;
-
+using System.Xml;
 
 public class DataManager : MonoBehaviour, IManager
 {
     private string _dataPath;
     private string _textFile;
     private string _streamingTextFile;
+    private string _xmlLevelProgress;
 
     private string _state;
     public string State
@@ -33,6 +33,7 @@ public class DataManager : MonoBehaviour, IManager
         _dataPath = Path.Combine(Application.persistentDataPath, "Player_Data");
         _textFile = Path.Combine(_dataPath, "Save_Data.txt");
         _streamingTextFile = Path.Combine(_dataPath, "Streaming_Save_Data.txt");
+        _xmlLevelProgress = Path.Combine(_dataPath, "Progress_Data.xml");
 
         Debug.Log(_dataPath);
     }
@@ -40,22 +41,6 @@ public class DataManager : MonoBehaviour, IManager
     void Start()
     {
         Initialize();
-    }
-
-    public void FilesystemInfo()
-    {
-        // ":" (mac/linux) or ";" (windows/unix)
-        Debug.Log($"Path separator character: {Path.PathSeparator}");
-
-        // "/" (mac/linux) or "\" (windows/unix)
-        Debug.Log($"Directory separator character: {Path.DirectorySeparatorChar}");
-
-        // The full path where HeroBorn directory is stored
-        Debug.Log($"Current directory: {Directory.GetCurrentDirectory()}");
-
-        // The temporary path which is the location of the Filesystem's
-        // temporary folder
-        Debug.Log($"Temporary Path: {Path.GetTempPath()}");
     }
 
     public void DeleteDirectory()
@@ -82,18 +67,36 @@ public class DataManager : MonoBehaviour, IManager
         Debug.Log("Persistent data file deleted");
     }
 
+    public void FilesystemInfo()
+    {
+        // ":" (mac/linux) or ";" (windows/unix)
+        Debug.Log($"Path separator character: {Path.PathSeparator}");
+
+        // "/" (mac/linux) or "\" (windows/unix)
+        Debug.Log($"Directory separator character: {Path.DirectorySeparatorChar}");
+
+        // The full path where HeroBorn directory is stored
+        Debug.Log($"Current directory: {Directory.GetCurrentDirectory()}");
+
+        // The temporary path which is the location of the Filesystem's
+        // temporary folder
+        Debug.Log($"Temporary Path: {Path.GetTempPath()}");
+    }
+
     public void Initialize()
     {
         _state = "Data Manager initialised";
         //Debug.Log(_state);
 
+        FilesystemInfo();
         NewDirectory();
         //DeleteDirectory();
         //NewTextFile();
         //UpdateTextFile();
         //ReadFromFile(_textFile);
         //DeleteFile(_textFile);
-        WriteToStream(_streamingTextFile);
+        //WriteToStream(_streamingTextFile);
+        WriteToXML(_xmlLevelProgress);
     }
     
     public void NewDirectory()
@@ -195,5 +198,47 @@ public class DataManager : MonoBehaviour, IManager
         streamWriter.Close();
 
         Debug.Log("File contents updated with StreamWriter");
+    }
+
+    public void WriteToXML(string filename)
+    {
+        // Check if the file does not exist
+        if (!File.Exists(filename))
+        {
+            // Create a new FileStream (use default format bytes?, not text)
+            FileStream xmlStream = File.Create(filename);
+
+            // Convert the FileStream to an xml format writer
+            XmlWriter xmlWriter = XmlWriter.Create(xmlStream);
+
+            // Specify the xml version is 1.0
+            // Has an optional boolean argument which determines whether or
+            // not it (the xml version?) is standalone
+            xmlWriter.WriteStartDocument();
+
+            // Create the root element
+            xmlWriter.WriteStartElement("level_progress");
+
+            for (int i = 1; i < 5; i++)
+            {
+                // Add a new element to the current start element (index 0)
+                // whose tag contains the following text
+                xmlWriter.WriteElementString("level", $"Level-{i}");
+            }
+
+            xmlWriter.WriteEndElement();
+
+            xmlWriter.Close();
+            xmlStream.Close();
+
+            //<?xml version="1.0" ?>
+            //<level_progress>
+            //    <level>Level-1</level>
+            //    <level>Level-2</level>
+            //    <level>Level-3</level>
+            //    <level>Level-4></level>
+            //</level_progress>
+            
+        }
     }
 }
