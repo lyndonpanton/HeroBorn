@@ -5,6 +5,7 @@ using UnityEngine;
 using System.IO;
 using System;
 using System.Xml;
+using Palmmedia.ReportGenerator.Core;
 
 public class DataManager : MonoBehaviour, IManager
 {
@@ -216,8 +217,16 @@ public class DataManager : MonoBehaviour, IManager
             // Create a new FileStream (use default format bytes?, not text)
             FileStream xmlStream = File.Create(filename);
 
+            XmlWriterSettings xmlWriterSettings = new XmlWriterSettings();
+            // Indent based on element nesting
+            xmlWriterSettings.Indent = true;
+            // Remove first line declaration above root element (using default)
+            xmlWriterSettings.OmitXmlDeclaration = false;
+            // Put attributes on a new line(using default)
+            xmlWriterSettings.NewLineOnAttributes = false;
+
             // Convert the FileStream to an xml format writer
-            XmlWriter xmlWriter = XmlWriter.Create(xmlStream);
+            XmlWriter xmlWriter = XmlWriter.Create(xmlStream, xmlWriterSettings);
 
             // Specify the xml version is 1.0
             // Has an optional boolean argument which determines whether or
@@ -227,10 +236,15 @@ public class DataManager : MonoBehaviour, IManager
             // Create the root element
             xmlWriter.WriteStartElement("level_progress");
 
+            // Add some attributes
+            xmlWriter.WriteAttributeString("fire", "hot");
+            xmlWriter.WriteAttributeString("water", "wet");
+            xmlWriter.WriteAttributeString("grass", "green");
+
             for (int i = 1; i < 5; i++)
             {
                 // Add a new element to the current start element (index 0)
-                // whose tag contains the following text
+                // which contains the following text
                 xmlWriter.WriteElementString("level", $"Level-{i}");
             }
 
@@ -250,6 +264,10 @@ public class DataManager : MonoBehaviour, IManager
             //    <level>Level-3</level>
             //    <level>Level-4></level>
             //</level_progress>
+
+            // xmlWriter.WriteAttributeString(key, value) to an add attribute
+            // to the current start element
+
         }
     }
 }
