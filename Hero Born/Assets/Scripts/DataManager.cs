@@ -10,6 +10,7 @@ public class DataManager : MonoBehaviour, IManager
 {
     private string _dataPath;
     private string _textFile;
+    private string _streamingTextFile;
 
     private string _state;
     public string State
@@ -30,6 +31,7 @@ public class DataManager : MonoBehaviour, IManager
 
         _dataPath = Path.Combine(Application.persistentDataPath, "Player_Data");
         _textFile = Path.Combine(_dataPath, "Save_Data.txt");
+        _streamingTextFile = Path.Combine(_dataPath, "Streaming_Save_Data.txt");
 
         Debug.Log(_dataPath);
     }
@@ -86,10 +88,11 @@ public class DataManager : MonoBehaviour, IManager
 
         NewDirectory();
         //DeleteDirectory();
-        NewTextFile();
-        UpdateTextFile();
-        ReadFromFile(_textFile);
+        //NewTextFile();
+        //UpdateTextFile();
+        //ReadFromFile(_textFile);
         //DeleteFile(_textFile);
+        WriteToStream(_streamingTextFile);
     }
     
     public void NewDirectory()
@@ -143,5 +146,36 @@ public class DataManager : MonoBehaviour, IManager
         );
 
         Debug.Log("File updated successfully");
+    }
+
+    public void WriteToStream(string filename)
+    {
+        // Check if file does not exist
+        if (!File.Exists(filename))
+        {
+            // create the new StreamWriter instance and create and open a
+            // new file
+            StreamWriter newStream = File.CreateText(filename);
+
+            // Make first line (HEADER) of stream if not already
+            newStream.WriteLine("<Save Data> for HERO BORN\n\n");
+
+            // Close the stream
+            newStream.Close();
+
+            Debug.Log("New file created with StreamWriter");
+        }
+
+        // Create a new StreamWriter instance and open a new file to append to
+        // Use this method so existing data is not overwritten
+        StreamWriter streamWriter = File.AppendText(filename);
+
+        // Write a new line to the game data
+        streamWriter.WriteLine("Game ended: " + DateTime.Now);
+
+        // Close the stream
+        streamWriter.Close();
+
+        Debug.Log("File contents updated with StreamWriter");
     }
 }
