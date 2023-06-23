@@ -6,6 +6,7 @@ using System.IO;
 using System;
 //using System;
 
+
 public class DataManager : MonoBehaviour, IManager
 {
     private string _dataPath;
@@ -130,6 +131,23 @@ public class DataManager : MonoBehaviour, IManager
         }
 
         Debug.Log(File.ReadAllText(filename));
+    }
+
+    public void ReadFromStream(string filename)
+    {
+        // Check if file does not exist
+        if (!File.Exists(filename))
+        {
+            Debug.Log("File does not exist...");
+            return;
+        }
+
+        // Create a new StreamReader instance with the name of the file to
+        // access
+        StreamReader streamReader = new StreamReader(filename);
+
+        // Output the contents of the file (from beginning) to the end
+        Debug.Log(streamReader.ReadToEnd());
     }
 
     public void UpdateTextFile()
