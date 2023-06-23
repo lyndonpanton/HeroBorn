@@ -48,24 +48,20 @@ public class DataManager : MonoBehaviour, IManager
     {
         if (!Directory.Exists(_dataPath))
         {
-            Debug.Log("Directory does not exist");
             return;
         }
 
         Directory.Delete(_dataPath, true);
-        Debug.Log("Data path directory deleted");
     }
 
     public void DeleteFile(string filename)
     {
         if (!File.Exists(filename))
         {
-            Debug.Log("File does not exist");
             return;
         }
 
         File.Delete(filename);
-        Debug.Log("Persistent data file deleted");
     }
 
     public void FilesystemInfo()
@@ -113,12 +109,9 @@ public class DataManager : MonoBehaviour, IManager
         if (!Directory.Exists(_dataPath))
         {
             Directory.CreateDirectory(_dataPath);
-            Debug.Log("Data Path directory created");
 
             return;
         }
-
-        Debug.Log("Data Path directory already exists...");
     }
 
     public void NewTextFile()
@@ -126,19 +119,15 @@ public class DataManager : MonoBehaviour, IManager
         if (!File.Exists(_textFile))
         {
             File.WriteAllText(_textFile, "<SAVE DATA>\n\n");
-            Debug.Log("Text file created");
 
             return;
         }
-
-        Debug.Log("Text file already exists");
     }
 
     public void ReadFromFile(string filename)
     {
         if (!File.Exists(filename))
         {
-            Debug.Log("File does not exist");
             return;
         }
 
@@ -150,23 +139,26 @@ public class DataManager : MonoBehaviour, IManager
         // Check if file does not exist
         if (!File.Exists(filename))
         {
-            Debug.Log("File does not exist...");
             return;
         }
 
-        // Create a new StreamReader instance with the name of the file to
-        // access
-        StreamReader streamReader = new StreamReader(filename);
+        using (StreamReader streamReader = new StreamReader(filename))
+        {
+            // Create a new StreamReader instance with the name of the file to
+            // access
+            // StreamReader streamReader = new StreamReader(filename);
 
-        // Output the contents of the file (from beginning) to the end
-        Debug.Log(streamReader.ReadToEnd());
+            // Output the contents of the file (from beginning) to the end
+            Debug.Log(streamReader.ReadToEnd());
+
+            //streamReader.Close();
+        }
     }
 
     public void UpdateTextFile()
     {
         if (!File.Exists( _textFile))
         {
-            Debug.Log("File does not exist");
             return;
         }
 
@@ -174,8 +166,6 @@ public class DataManager : MonoBehaviour, IManager
             _textFile,
             $"Game started: {DateTime.Now}\n"
         );
-
-        Debug.Log("File updated successfully");
     }
 
     public void WriteToStream(string filename)
@@ -183,30 +173,32 @@ public class DataManager : MonoBehaviour, IManager
         // Check if file does not exist
         if (!File.Exists(filename))
         {
-            // create the new StreamWriter instance and create and open a
-            // new file
-            StreamWriter newStream = File.CreateText(filename);
+            using (StreamWriter newStream = File.CreateText(filename))
+            {
+                // create the new StreamWriter instance and create and open a
+                // new file
+                // StreamWriter newStream = File.CreateText(filename);
 
-            // Make first line (HEADER) of stream if not already
-            newStream.WriteLine("<Save Data> for HERO BORN\n\n");
+                // Make first line (HEADER) of stream if not already
+                newStream.WriteLine("<Save Data> for HERO BORN\n\n");
 
-            // Close the stream
-            newStream.Close();
-
-            Debug.Log("New file created with StreamWriter");
+                // Close the stream
+                //newStream.Close();
+            }
         }
 
-        // Create a new StreamWriter instance and open a new file to append to
-        // Use this method so existing data is not overwritten
-        StreamWriter streamWriter = File.AppendText(filename);
+        using (StreamWriter streamWriter = File.AppendText(filename))
+        {
+            // Create a new StreamWriter instance and open a new file to append to
+            // Use this method so existing data is not overwritten
+            // StreamWriter streamWriter = File.AppendText(filename);
 
-        // Write a new line to the game data
-        streamWriter.WriteLine("Game ended: " + DateTime.Now);
+            // Write a new line to the game data
+            streamWriter.WriteLine("Game ended: " + DateTime.Now);
 
-        // Close the stream
-        streamWriter.Close();
-
-        Debug.Log("File contents updated with StreamWriter");
+            // Close the stream
+            //streamWriter.Close();
+        }
     }
 
     public void WriteToXML(string filename)
@@ -214,60 +206,68 @@ public class DataManager : MonoBehaviour, IManager
         // Check if the file does not exist
         if (!File.Exists(filename))
         {
-            // Create a new FileStream (use default format bytes?, not text)
-            FileStream xmlStream = File.Create(filename);
+            // using FileStream xmlStream = File.Create(filename);
+            // Above method removes need for nesting
 
-            XmlWriterSettings xmlWriterSettings = new XmlWriterSettings();
-            // Indent based on element nesting
-            xmlWriterSettings.Indent = true;
-            // Remove first line declaration above root element (using default)
-            xmlWriterSettings.OmitXmlDeclaration = false;
-            // Put attributes on a new line(using default)
-            xmlWriterSettings.NewLineOnAttributes = false;
-
-            // Convert the FileStream to an xml format writer
-            XmlWriter xmlWriter = XmlWriter.Create(xmlStream, xmlWriterSettings);
-
-            // Specify the xml version is 1.0
-            // Has an optional boolean argument which determines whether or
-            // not it (the xml version?) is standalone
-            xmlWriter.WriteStartDocument();
-
-            // Create the root element
-            xmlWriter.WriteStartElement("level_progress");
-
-            // Add some attributes
-            xmlWriter.WriteAttributeString("fire", "hot");
-            xmlWriter.WriteAttributeString("water", "wet");
-            xmlWriter.WriteAttributeString("grass", "green");
-
-            for (int i = 1; i < 5; i++)
+            // Automatically closes a stream at end of block by calling
+            // Dispose from the IDisposable interface that Streams inherit
+            // from
+            using (FileStream xmlStream = File.Create(filename))
             {
-                // Add a new element to the current start element (index 0)
-                // which contains the following text
-                xmlWriter.WriteElementString("level", $"Level-{i}");
+                // Create a new FileStream (use default format bytes?, not text)
+                //FileStream xmlStream = File.Create(filename);
+
+                XmlWriterSettings xmlWriterSettings = new XmlWriterSettings();
+                // Indent based on element nesting
+                xmlWriterSettings.Indent = true;
+                // Remove first line declaration above root element (using default)
+                xmlWriterSettings.OmitXmlDeclaration = false;
+                // Put attributes on a new line(using default)
+                xmlWriterSettings.NewLineOnAttributes = false;
+
+                // Convert the FileStream to an xml format writer
+                XmlWriter xmlWriter = XmlWriter.Create(xmlStream, xmlWriterSettings);
+
+                // Specify the xml version is 1.0
+                // Has an optional boolean argument which determines whether or
+                // not it (the xml version?) is standalone
+                xmlWriter.WriteStartDocument();
+
+                // Create the root element
+                xmlWriter.WriteStartElement("level_progress");
+
+                // Add some attributes
+                xmlWriter.WriteAttributeString("fire", "hot");
+                xmlWriter.WriteAttributeString("water", "wet");
+                xmlWriter.WriteAttributeString("grass", "green");
+
+                for (int i = 1; i < 5; i++)
+                {
+                    // Add a new element to the current start element (index 0)
+                    // which contains the following text
+                    xmlWriter.WriteElementString("level", $"Level-{i}");
+                }
+
+                // End the root element
+                xmlWriter.WriteEndElement();
+
+                // Close the xmlWriter to release the resources being used up
+                xmlWriter.Close();
+                // Close the FileStream to release the resources being used up
+                //xmlStream.Close();
+
+                // Use the default encoding
+                // <?xml version="1.0" encoding="utf-8"?>
+                // <level_progress fire="hot" water="wet" grass="green">
+                // <level>Level-1</level>
+                // <level>Level-2</level>
+                // <level>Level-3</level>
+                // <level>Level-4</level>
+                // </level_progress>
+
+                // xmlWriter.WriteAttributeString(key, value) to an add attribute
+                // to the current start element
             }
-
-            // End the root element
-            xmlWriter.WriteEndElement();
-
-            // Close the xmlWriter to release the resources being used up
-            xmlWriter.Close();
-            // Close the FileStream to release the resources being used up
-            xmlStream.Close();
-
-            // Use the default encoding
-            //<?xml version="1.0" encoding="utf-8">
-            //<level_progress>
-            //    <level>Level-1</level>
-            //    <level>Level-2</level>
-            //    <level>Level-3</level>
-            //    <level>Level-4></level>
-            //</level_progress>
-
-            // xmlWriter.WriteAttributeString(key, value) to an add attribute
-            // to the current start element
-
         }
     }
 }
