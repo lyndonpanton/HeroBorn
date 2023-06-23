@@ -89,14 +89,22 @@ public class DataManager : MonoBehaviour, IManager
         //Debug.Log(_state);
 
         FilesystemInfo();
+
         NewDirectory();
         //DeleteDirectory();
+
         //NewTextFile();
         //UpdateTextFile();
         //ReadFromFile(_textFile);
         //DeleteFile(_textFile);
+
         //WriteToStream(_streamingTextFile);
+
         WriteToXML(_xmlLevelProgress);
+        // XML files can be read from using the same methods as either text
+        // files or Streams
+        ReadFromFile(_xmlLevelProgress);
+        ReadFromStream(_xmlLevelProgress);
     }
     
     public void NewDirectory()
@@ -226,19 +234,22 @@ public class DataManager : MonoBehaviour, IManager
                 xmlWriter.WriteElementString("level", $"Level-{i}");
             }
 
+            // End the root element
             xmlWriter.WriteEndElement();
 
+            // Close the xmlWriter to release the resources being used up
             xmlWriter.Close();
+            // Close the FileStream to release the resources being used up
             xmlStream.Close();
 
-            //<?xml version="1.0" ?>
+            // Use the default encoding
+            //<?xml version="1.0" encoding="utf-8">
             //<level_progress>
             //    <level>Level-1</level>
             //    <level>Level-2</level>
             //    <level>Level-3</level>
             //    <level>Level-4></level>
             //</level_progress>
-            
         }
     }
 }
