@@ -44,7 +44,7 @@ public class DataManager : MonoBehaviour, IManager
         _streamingTextFile = Path.Combine(_dataPath, "Streaming_Save_Data.txt");
         _xmlLevelProgress = Path.Combine(_dataPath, "Progress_Data.xml");
         _xmlWeapons = Path.Combine(_dataPath, "WeaponInventory.xml");
-        _jsonWeapons = Path.Combine(_dataPath, "WeaponJSON.json");
+        //_jsonWeapons = Path.Combine(_dataPath, "WeaponJSON.json");
         _jsonWeapons = Path.Combine(_dataPath, "WeaponInventory.json");
 
         Debug.Log(_dataPath);
@@ -73,6 +73,31 @@ public class DataManager : MonoBehaviour, IManager
         }
 
         File.Delete(filename);
+    }
+
+    public void DeserializeJSON()
+    {
+        // Check if file exists
+        if (!File.Exists(_jsonWeapons))
+        {
+            return;
+        }
+
+        // Open a StreamReader instance and read from the given file
+        using StreamReader stream = new StreamReader(_jsonWeapons);
+
+        // Read the file given to the stream from start to end
+        string jsonString = stream.ReadToEnd();
+
+        // Convert a string from JSON format to the given class'
+        // property format and save it to a variable
+        WeaponShop weaponData = JsonUtility.FromJson<WeaponShop>(jsonString);
+
+        // Output each weapon in the weapon shop
+        foreach (Weapon weapon in weaponData.inventory)
+        {
+            Debug.Log($"Weapon: {weapon.name} - Damage: {weapon.damage}");
+        }
     }
 
     public void DeserializeXML()
@@ -142,6 +167,7 @@ public class DataManager : MonoBehaviour, IManager
         //SerializeXML();
         //DeserializeXML();
         SerializeJSON();
+        DeserializeJSON();
     }
 
     public void NewDirectory()
