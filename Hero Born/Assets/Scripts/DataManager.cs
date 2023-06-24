@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using UnityEngine;
 using System.IO;
 using System;
 using System.Xml;
-using Palmmedia.ReportGenerator.Core;
+using System.Xml.Serialization;
 
 public class DataManager : MonoBehaviour, IManager
 {
@@ -13,6 +12,13 @@ public class DataManager : MonoBehaviour, IManager
     private string _textFile;
     private string _streamingTextFile;
     private string _xmlLevelProgress;
+    private string _xmlWeapons;
+    private List<Weapon> weaponInventory = new List<Weapon>()
+    {
+        new Weapon("Sword of Doom", 100),
+        new Weapon("Butterfly knives", 25),
+        new Weapon("Brass knuckles", 15)
+    };
 
     private string _state;
     public string State
@@ -35,6 +41,7 @@ public class DataManager : MonoBehaviour, IManager
         _textFile = Path.Combine(_dataPath, "Save_Data.txt");
         _streamingTextFile = Path.Combine(_dataPath, "Streaming_Save_Data.txt");
         _xmlLevelProgress = Path.Combine(_dataPath, "Progress_Data.xml");
+        _xmlWeapons = Path.Combine(_dataPath, "WeaponInventory.xml");
 
         Debug.Log(_dataPath);
     }
@@ -97,13 +104,14 @@ public class DataManager : MonoBehaviour, IManager
 
         //WriteToStream(_streamingTextFile);
 
-        WriteToXML(_xmlLevelProgress);
+        //WriteToXML(_xmlLevelProgress);
         // XML files can be read from using the same methods as either text
         // files or Streams
-        ReadFromFile(_xmlLevelProgress);
-        ReadFromStream(_xmlLevelProgress);
+        //ReadFromFile(_xmlLevelProgress);
+        //ReadFromStream(_xmlLevelProgress);
+        SerializeXML();
     }
-    
+
     public void NewDirectory()
     {
         if (!Directory.Exists(_dataPath))
@@ -152,6 +160,22 @@ public class DataManager : MonoBehaviour, IManager
             Debug.Log(streamReader.ReadToEnd());
 
             //streamReader.Close();
+        }
+    }
+
+    public void SerializeXML()
+    {
+        // A xmlSerializer instance that can translate the given data type in
+        // Xml format
+        XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Weapon>));
+
+        // Create a new FileStream instance with the name of the file to access
+        using (FileStream stream = File.Create(_xmlWeapons))
+        {
+            // Use the serializer and the file stream to serialize the second
+            // argument into xml format and place the serialized data into the
+            // supplied stream
+            xmlSerializer.Serialize(stream, weaponInventory);
         }
     }
 
