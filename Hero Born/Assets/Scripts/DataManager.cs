@@ -197,12 +197,41 @@ public class DataManager : MonoBehaviour, IManager
 
     public void SerializeJSON()
     {
-        Weapon sword = new Weapon("Sword of Doom", 100);
+        // Single Object method start (valid)
+        //Weapon sword = new Weapon("Sword of Doom", 100);
 
         // Convert an object (properties using key/value pairs) to JSON format
         // The boolean argument denotes whether to format the JSON via
         // indentation and white spacing
-        string jsonString = JsonUtility.ToJson(sword, true);
+        //string jsonString = JsonUtility.ToJson(sword, true);
+
+        // Single Object method Method A end
+
+        // Mutliple objects method start I (invalid)
+
+        // Unity's JSON serialization handling does not support Lists and
+        // arrays on their own and they instead need to be part of a class for
+        // the JsonUtiltiy class to be able to recognise and handle it
+        // correctly
+        // This results in an empty JSON object being stored in the file "{}"
+        //string jsonString = JsonUtility.ToJson(weaponInventory, true);
+
+        // Mutliple objects method start I end
+
+        // Mutliple objects method start II (valid)
+
+        WeaponShop shop = new WeaponShop();
+
+        // A copy of weaponInventory is now part of a class and now the List
+        // can be used by Unity's JSon serialization
+        shop.inventory = weaponInventory;
+
+        // Convert an object to JSON format
+        string jsonString = JsonUtility.ToJson(shop, true);
+
+        // Mutliple objects method start II end
+
+        // General required method (All methods use this)
 
         // Open a StreamWriter instance and create a new (JSON) text file with
         // the given file name
