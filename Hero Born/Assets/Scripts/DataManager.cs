@@ -5,7 +5,7 @@ using System.IO;
 using System;
 using System.Xml;
 using System.Xml.Serialization;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 
 public class DataManager : MonoBehaviour, IManager
 {
@@ -14,6 +14,7 @@ public class DataManager : MonoBehaviour, IManager
     private string _streamingTextFile;
     private string _xmlLevelProgress;
     private string _xmlWeapons;
+    private string _jsonWeapons;
     private List<Weapon> weaponInventory = new List<Weapon>()
     {
         new Weapon("Sword of Doom", 100),
@@ -43,6 +44,8 @@ public class DataManager : MonoBehaviour, IManager
         _streamingTextFile = Path.Combine(_dataPath, "Streaming_Save_Data.txt");
         _xmlLevelProgress = Path.Combine(_dataPath, "Progress_Data.xml");
         _xmlWeapons = Path.Combine(_dataPath, "WeaponInventory.xml");
+        _jsonWeapons = Path.Combine(_dataPath, "WeaponJSON.json");
+        _jsonWeapons = Path.Combine(_dataPath, "WeaponInventory.json");
 
         Debug.Log(_dataPath);
     }
@@ -136,8 +139,9 @@ public class DataManager : MonoBehaviour, IManager
         // files or Streams
         //ReadFromFile(_xmlLevelProgress);
         //ReadFromStream(_xmlLevelProgress);
-        SerializeXML();
-        DeserializeXML();
+        //SerializeXML();
+        //DeserializeXML();
+        SerializeJSON();
     }
 
     public void NewDirectory()
@@ -189,6 +193,23 @@ public class DataManager : MonoBehaviour, IManager
 
             //streamReader.Close();
         }
+    }
+
+    public void SerializeJSON()
+    {
+        Weapon sword = new Weapon("Sword of Doom", 100);
+
+        // Convert an object (properties using key/value pairs) to JSON format
+        // The boolean argument denotes whether to format the JSON via
+        // indentation and white spacing
+        string jsonString = JsonUtility.ToJson(sword, true);
+
+        // Open a StreamWriter instance and create a new (JSON) text file with
+        // the given file name
+        using StreamWriter stream = File.CreateText(_jsonWeapons);
+
+        // Write the JSON formatted object into the (JSON) text file
+        stream.WriteLine(jsonString);
     }
 
     public void SerializeXML()
