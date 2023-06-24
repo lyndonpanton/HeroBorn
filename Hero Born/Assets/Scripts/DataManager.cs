@@ -5,6 +5,7 @@ using System.IO;
 using System;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 public class DataManager : MonoBehaviour, IManager
 {
@@ -71,6 +72,32 @@ public class DataManager : MonoBehaviour, IManager
         File.Delete(filename);
     }
 
+    public void DeserializeXML()
+    {
+        if (!File.Exists(_xmlWeapons))
+        {
+            return;
+        }
+
+        // Create an XmlSerializer instance and denote the type of object
+        // which the XML data is going to be deserialized into
+        XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Weapon>));
+
+        // Open a stream for reading which will be automatically closed
+        using FileStream stream = File.OpenRead(_xmlWeapons);
+
+        // Create a varible to store the deserialized data
+        // The Deserialize method always returns an object type, so that needs
+        // to be cast to the relevant type
+        List<Weapon> weapons = (List<Weapon>)xmlSerializer.Deserialize(stream);
+
+        // Output information about each object in the deserialized data
+        foreach (Weapon weapon in weapons)
+        {
+            Debug.Log($"Weapon: {weapon.name} - Damage: {weapon.damage}");
+        }
+    }
+
     public void FilesystemInfo()
     {
         // ":" (mac/linux) or ";" (windows/unix)
@@ -110,6 +137,7 @@ public class DataManager : MonoBehaviour, IManager
         //ReadFromFile(_xmlLevelProgress);
         //ReadFromStream(_xmlLevelProgress);
         SerializeXML();
+        DeserializeXML();
     }
 
     public void NewDirectory()
