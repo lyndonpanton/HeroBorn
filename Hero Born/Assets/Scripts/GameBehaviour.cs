@@ -61,13 +61,13 @@ public class GameBehaviour : MonoBehaviour, IManager
         //LootStack.Push("Pair of Winged Boots");
         //LootStack.Push("Mythril Bracer");
 
-        Shop<string> itemShop = new();
+        Shop<Collectable> itemShop = new();
 
-        itemShop.AddItem("Potion");
-        itemShop.AddItem("Antidote");
+        itemShop.AddItem(new Potion());
+        itemShop.AddItem(new Antidote());
 
-        Debug.Log($"There are {itemShop.GetStockCount<string>()} (string) item(s) for sale.");
-        Debug.Log($"There are {itemShop.GetStockCount<int>()} (int) item(s) for sale.");
+        Debug.Log($"There are {itemShop.GetStockCount<Potion>()} item(s) for sale.");
+        Debug.Log($"There are {itemShop.GetStockCount<Antidote>()} item(s) for sale.");
     }
 
     public int Items

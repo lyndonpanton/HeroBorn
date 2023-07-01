@@ -16,7 +16,7 @@ public class Shop<T> where T : Collectable
 
     // A new generic type. Since it is the outer most instance of the generic
     // called U, it is defined when this method is called
-    public int GetStockCount<U>()
+    public int GetStockCount<U>() where U : T
     {
         int stock = 0;
 
