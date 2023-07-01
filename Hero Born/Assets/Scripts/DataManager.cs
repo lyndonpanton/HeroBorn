@@ -353,7 +353,7 @@ public class DataManager : MonoBehaviour, IManager
                 // Put attributes on a new line(using default)
                 xmlWriterSettings.NewLineOnAttributes = false;
 
-                // Convert the FileStream to an xml format writer
+                // Convert the FSileStream to an xml format writer
                 XmlWriter xmlWriter = XmlWriter.Create(xmlStream, xmlWriterSettings);
 
                 // Specify the xml version is 1.0

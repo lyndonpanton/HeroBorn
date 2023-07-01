@@ -53,13 +53,17 @@ public class GameBehaviour : MonoBehaviour, IManager
         // to it
         _state.FancyDebug();
 
-        Debug.Log(_state);
+        //Debug.Log(_state);
 
-        LootStack.Push("Sword of Doom");
-        LootStack.Push("HP Boost");
-        LootStack.Push("Golden Key");
-        LootStack.Push("Pair of Winged Boots");
-        LootStack.Push("Mythril Bracer");
+        //LootStack.Push("Sword of Doom");
+        //LootStack.Push("HP Boost");
+        //LootStack.Push("Golden Key");
+        //LootStack.Push("Pair of Winged Boots");
+        //LootStack.Push("Mythril Bracer");
+
+        Shop<string> itemShop = new();
+
+        Debug.Log($"There are {itemShop.inventory.Count} items for sale.");
     }
 
     public int Items
