@@ -36,6 +36,15 @@ public class GameBehaviour : MonoBehaviour, IManager
         }
     }
 
+    public delegate void DebugDelegate(string newText);
+
+    public DebugDelegate debug = Print;
+
+    public static void Print(string newText)
+    {
+        Debug.Log(newText);
+    }
+
     void Start()
     {
         Initialize();
@@ -54,6 +63,7 @@ public class GameBehaviour : MonoBehaviour, IManager
         _state.FancyDebug();
 
         //Debug.Log(_state);
+        debug(_state);
 
         //LootStack.Push("Sword of Doom");
         //LootStack.Push("HP Boost");
