@@ -4,7 +4,7 @@ using UnityEngine;
 
 // T is defined at initialisation and all inner instances of a generic will
 // match the outer most definition
-public class Shop<T>
+public class Shop<T> where T : Collectable
 {
     //public List<T> inventory = new List<T>();
     public List<T> inventory = new();
