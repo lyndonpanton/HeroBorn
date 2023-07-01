@@ -63,7 +63,10 @@ public class GameBehaviour : MonoBehaviour, IManager
 
         Shop<string> itemShop = new();
 
-        Debug.Log($"There are {itemShop.inventory.Count} items for sale.");
+        itemShop.AddItem("Potion");
+        itemShop.AddItem("Antidote");
+
+        Debug.Log($"There are {itemShop.inventory.Count} item(s) for sale.");
     }
 
     public int Items
