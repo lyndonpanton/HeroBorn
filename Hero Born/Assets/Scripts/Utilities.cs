@@ -15,6 +15,12 @@ public static class Utilities
 
     public static bool RestartLevel(int sceneIndex)
     {
+        if (sceneIndex < 0)
+        {
+            throw new System
+                .ArgumentException("Scene index cannot be negative");
+        }
+
         Debug.Log("Player deaths: " + PlayerDeaths);
 
         string message = UpdateDeathCount(ref PlayerDeaths);

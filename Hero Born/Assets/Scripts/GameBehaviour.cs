@@ -39,8 +39,8 @@ public class GameBehaviour : MonoBehaviour, IManager
     public delegate void DebugDelegate(string newText);
     public DebugDelegate debug = Print;
 
-    public delegate void EventDelegate(int param1, int param2);
-    public event EventDelegate eventInstance;
+    //public delegate void EventDelegate(int param1, int param2);
+    //public event EventDelegate eventInstance;
 
     public PlayerBehaviour playerBehaviour;
 
@@ -52,6 +52,16 @@ public class GameBehaviour : MonoBehaviour, IManager
     void Start()
     {
         Initialize();
+    }
+
+    // OnDisable executes when the object is inactive
+    void OnDisable()
+    {
+        // Clean up event subscription in order to release allocated resources
+        // By default subscriptions are not removed after the subscribing
+        // object is destroyed
+        playerBehaviour.playerJump -= HandlePlayerJump;
+        debug("Jump event unsubscribed");
     }
 
     // OnEnable executes when the object is active, not just in the process of
@@ -189,6 +199,8 @@ public class GameBehaviour : MonoBehaviour, IManager
     {
         //Utilities.RestartLevel();
         Utilities.RestartLevel(0);
+        //Utilities.RestartLevel(-1);
+
     }
 
     public void UpdateScene(string updatedText)
