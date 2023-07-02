@@ -65,19 +65,21 @@ public class GameBehaviour : MonoBehaviour, IManager
         //Debug.Log(_state);
         debug(_state);
 
+        LogWithDelegate(debug);
+
         //LootStack.Push("Sword of Doom");
         //LootStack.Push("HP Boost");
         //LootStack.Push("Golden Key");
         //LootStack.Push("Pair of Winged Boots");
         //LootStack.Push("Mythril Bracer");
 
-        Shop<Collectable> itemShop = new();
+        //Shop<Collectable> itemShop = new();
 
-        itemShop.AddItem(new Potion());
-        itemShop.AddItem(new Antidote());
+        //itemShop.AddItem(new Potion());
+        //itemShop.AddItem(new Antidote());
 
-        Debug.Log($"There are {itemShop.GetStockCount<Potion>()} item(s) for sale.");
-        Debug.Log($"There are {itemShop.GetStockCount<Antidote>()} item(s) for sale.");
+        //Debug.Log($"There are {itemShop.GetStockCount<Potion>()} item(s) for sale.");
+        //Debug.Log($"There are {itemShop.GetStockCount<Antidote>()} item(s) for sale.");
     }
 
     public int Items
@@ -134,6 +136,11 @@ public class GameBehaviour : MonoBehaviour, IManager
                 ProgressText.text = "Ouch... that's gotta hurt";
             }
         }
+    }
+
+    public void LogWithDelegate(DebugDelegate del)
+    {
+        del("Delegating the debug task...");
     }
 
     public void PrintLootReport()
