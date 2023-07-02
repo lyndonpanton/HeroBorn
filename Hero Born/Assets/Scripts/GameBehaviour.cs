@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -197,9 +198,24 @@ public class GameBehaviour : MonoBehaviour, IManager
 
     public void RestartScene()
     {
-        //Utilities.RestartLevel();
-        Utilities.RestartLevel(0);
-        //Utilities.RestartLevel(-1);
+        try
+        {
+            //Utilities.RestartLevel();
+            //Utilities.RestartLevel(0);
+            Utilities.RestartLevel(-1);
+            debug("Level successfully restarted...");
+        }
+        catch (ArgumentException exception)
+        {
+            Utilities.RestartLevel(0);
+            // exception.ToString() is automatically called when an exception
+            // is placed in a string
+            debug($"Reverting to scene 0: {exception}");
+        }
+        finally
+        {
+            debug("Level restarted successfully...");
+        }
 
     }
 

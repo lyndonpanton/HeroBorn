@@ -15,6 +15,7 @@ public static class Utilities
 
     public static bool RestartLevel(int sceneIndex)
     {
+        // Unity does not support negative indexes when loading scenes
         if (sceneIndex < 0)
         {
             throw new System
