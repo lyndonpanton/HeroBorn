@@ -37,8 +37,12 @@ public class GameBehaviour : MonoBehaviour, IManager
     }
 
     public delegate void DebugDelegate(string newText);
-
     public DebugDelegate debug = Print;
+
+    public delegate void EventDelegate(int param1, int param2);
+    public event EventDelegate eventInstance;
+
+    public PlayerBehaviour playerBehaviour;
 
     public static void Print(string newText)
     {
@@ -48,6 +52,31 @@ public class GameBehaviour : MonoBehaviour, IManager
     void Start()
     {
         Initialize();
+    }
+
+    // OnEnable executes when the object is active, not just in the process of
+    // of loading (that is how Awake works)
+    void OnEnable()
+    {
+        // Get the player game object
+        GameObject player = GameObject.Find("Player");
+
+        // Get the player behaviour script
+        playerBehaviour = player.GetComponent<PlayerBehaviour>();
+
+        //playerBehaviour = GameObject.Find("Player")
+        //    .GetComponent<PlayerBehaviour>();
+
+        // Subscribe to the playerJump event (declared in PlayerBehaviour)
+        // with the denoted method
+        playerBehaviour.playerJump += HandlePlayerJump;
+
+        debug("Jump event subscribed");
+    }
+
+    public void HandlePlayerJump()
+    {
+        debug("Player has jumped...");
     }
 
     public void Initialize()

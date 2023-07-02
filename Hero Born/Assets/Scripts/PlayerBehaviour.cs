@@ -25,6 +25,13 @@ public class PlayerBehaviour : MonoBehaviour
 
     private GameBehaviour _gameManager;
 
+    // A new delegate type that takes no parameters and returns void
+    public delegate void JumpingEvent();
+    // A new event of JumpingEvent type, that can be treated as a method that
+    // matches the preceding delegate's void return and has no parameter
+    // signature
+    public event JumpingEvent playerJump;
+
     void Start()
     {
         if (GetComponent<Rigidbody>() != null)
@@ -68,6 +75,11 @@ public class PlayerBehaviour : MonoBehaviour
                 Vector3.up * JumpVelocity,
                 ForceMode.Impulse
             );
+
+            // Calls an event delegate
+            // Each time the player jumps, the playerJump event is sent out to
+            // all of its subscribers to notify them of the action
+            playerJump();
         }
 
         // stop allowing jumps after a jump is peformed
